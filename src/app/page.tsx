@@ -192,23 +192,23 @@ function HeroSection() {
   return (
     <motion.section
       style={{ opacity, scale }}
-      className="relative min-h-screen flex items-center px-12 md:px-24 overflow-hidden"
+      className="relative min-h-screen flex items-center px-6 md:px-24 overflow-hidden"
     >
       <ParticleBackground />
       <div className="absolute inset-0 bg-gradient-to-r from-[var(--background)] via-[var(--background)] to-transparent" />
 
-      <div className="relative z-10 flex items-center gap-16 max-w-7xl mx-auto w-full">
+      <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-16 max-w-7xl mx-auto w-full">
         {/* Left: Big Name */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="flex-shrink-0"
+          className="flex-shrink-0 text-center md:text-left"
         >
           <motion.h1
             animate={{ scale: [1, 1.02, 1] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="text-6xl md:text-8xl lg:text-9xl font-bold whitespace-nowrap tracking-wider"
+            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold whitespace-nowrap tracking-wider"
             style={{ color: 'var(--foreground)' }}
           >
             饶家兴
@@ -217,7 +217,7 @@ function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            className="text-xl md:text-2xl mt-2"
+            className="text-lg md:text-2xl mt-2"
             style={{ color: 'var(--muted)' }}
           >
             Rao Jiaxing
@@ -229,7 +229,7 @@ function HeroSection() {
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
-          className="flex-1 max-w-2xl"
+          className="flex-1 max-w-2xl w-full"
         >
           <TypewriterText lines={typewriterLines} />
         </motion.div>
@@ -407,32 +407,32 @@ function IdolSection() {
   }, [selectedImage, totalItems]);
 
   return (
-    <section className="relative min-h-screen flex flex-col overflow-hidden" style={{ backgroundColor: 'var(--background)' }}>
+    <section className="relative min-h-screen flex flex-col" style={{ backgroundColor: 'var(--background)' }}>
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="pt-20 pb-8 text-center z-10"
+        className="pt-20 pb-6 md:pb-8 text-center z-10"
       >
         <motion.span
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-3xl"
+          className="text-2xl md:text-3xl"
           style={{ color: 'var(--primary)' }}
         >
           🏀
         </motion.span>
-        <h2 className="text-4xl md:text-6xl font-bold mb-2 mt-2" style={{ color: 'var(--foreground)' }}>
+        <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-1 md:mb-2 mt-1" style={{ color: 'var(--foreground)' }}>
           <span style={{ color: 'var(--primary)' }}>致敬偶像</span>
           <span> · 斯蒂芬·库里</span>
         </h2>
-        <p className="text-lg" style={{ color: 'var(--muted)' }}>不只是偶像，是信仰</p>
+        <p className="text-sm md:text-lg" style={{ color: 'var(--muted)' }}>不只是偶像，是信仰</p>
       </motion.div>
 
-      {/* Film Strip Container */}
-      <div className="flex-1 flex items-center relative overflow-hidden">
+      {/* Desktop: Horizontal Film Strip */}
+      <div className="hidden md:flex flex-1 items-center relative overflow-hidden">
         {/* Gradient masks for fade effect */}
         <div className="absolute left-0 top-0 bottom-0 w-24 z-20 pointer-events-none" style={{ background: `linear-gradient(to right, var(--background), transparent)` }} />
         <div className="absolute right-0 top-0 bottom-0 w-24 z-20 pointer-events-none" style={{ background: `linear-gradient(to left, var(--background), transparent)` }} />
@@ -440,9 +440,8 @@ function IdolSection() {
         {/* Center glow */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-gradient-to-r from-[#1E88E5]/[0.03] via-transparent to-[#FFD700]/[0.03] rounded-full blur-[100px] pointer-events-none" />
 
-        {/* Film Strip - Auto scrolling from right to left */}
+        {/* Film Strip */}
         <div className="flex items-center gap-32 animate-film-scroll">
-          {/* Duplicate items for seamless loop */}
           {[...idolImages, ...idolImages].map((item, index) => (
             <motion.div
               key={`${item.src}-${index}`}
@@ -450,8 +449,8 @@ function IdolSection() {
               whileHover={{ scale: 1.05, y: -10 }}
               onClick={() => setSelectedImage(index % totalItems)}
             >
-              {/* Photo frame - 16:9 aspect ratio, larger size */}
-              <div className="relative w-[400px] md:w-[650px] aspect-video rounded-xl overflow-hidden shadow-[0_0_30px_rgba(0,0,0,0.5)] group-hover:shadow-[0_0_50px_rgba(30,136,229,0.3)] transition-shadow duration-500">
+              {/* Photo frame - 16:9 aspect ratio */}
+              <div className="relative w-[400px] lg:w-[550px] aspect-video rounded-xl overflow-hidden shadow-[0_0_30px_rgba(0,0,0,0.5)] group-hover:shadow-[0_0_50px_rgba(30,136,229,0.3)] transition-shadow duration-500">
                 <Image
                   src={item.src}
                   alt={item.title}
@@ -469,6 +468,21 @@ function IdolSection() {
               </div>
               {/* Frame border glow */}
               <div className="absolute inset-0 rounded-xl border-2 border-transparent group-hover:border-[var(--primary)]/50 transition-colors duration-300 pointer-events-none" />
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* Mobile: Vertical Grid */}
+      <div className="md:hidden flex-1 px-4 pb-8">
+        <div className="grid grid-cols-2 gap-3">
+          {idolImages.map((item, index) => (
+            <motion.div
+              key={`mobile-${item.src}-${index}`}
+              className="relative aspect-square rounded-lg overflow-hidden cursor-pointer"
+              onClick={() => setSelectedImage(index)}
+            >
+              <Image src={item.src} alt={item.title} fill className="object-cover" sizes="(max-width: 768px) 50vw, 25vw" />
             </motion.div>
           ))}
         </div>
@@ -726,7 +740,7 @@ function TimelineSection() {
   );
 }
 
-// Gallery Section - Horizontal Film Strip
+// Gallery Section - Responsive
 function GallerySection() {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
 
@@ -759,32 +773,31 @@ function GallerySection() {
   }, [selectedImage, totalItems]);
 
   return (
-    <section className="relative min-h-screen flex flex-col overflow-hidden" style={{ backgroundColor: 'var(--background)' }}>
+    <section className="relative min-h-screen flex flex-col" style={{ backgroundColor: 'var(--background)' }}>
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="pt-20 pb-8 text-center z-10"
+        className="pt-20 pb-8 md:pb-12 text-center z-10"
       >
-        <h2 className="text-5xl md:text-7xl font-bold mb-2" style={{ color: 'var(--foreground)' }}>
+        <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-2" style={{ color: 'var(--foreground)' }}>
           <span style={{ color: 'var(--primary)' }}>生</span>活
         </h2>
-        <p className="text-lg" style={{ color: 'var(--muted)' }}>这是我的日常</p>
+        <p className="text-base md:text-lg" style={{ color: 'var(--muted)' }}>这是我的日常</p>
       </motion.div>
 
-      {/* Film Strip Container */}
-      <div className="flex-1 flex items-center relative overflow-hidden">
-        {/* Gradient masks for fade effect */}
+      {/* Desktop: Horizontal Film Strip */}
+      <div className="hidden md:flex flex-1 items-center relative overflow-hidden">
+        {/* Gradient masks */}
         <div className="absolute left-0 top-0 bottom-0 w-24 z-20 pointer-events-none" style={{ background: `linear-gradient(to right, var(--background), transparent)` }} />
         <div className="absolute right-0 top-0 bottom-0 w-24 z-20 pointer-events-none" style={{ background: `linear-gradient(to left, var(--background), transparent)` }} />
 
         {/* Center glow */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-gradient-to-r from-[#1E88E5]/[0.03] via-transparent to-[#FFD700]/[0.03] rounded-full blur-[100px] pointer-events-none" />
 
-        {/* Film Strip - Auto scrolling from right to left */}
+        {/* Film Strip */}
         <div className="flex items-center gap-32 animate-film-scroll">
-          {/* Duplicate items for seamless loop */}
           {[...galleryItems, ...galleryItems].map((item, index) => (
             <motion.div
               key={`${item.src}-${index}`}
@@ -809,9 +822,38 @@ function GallerySection() {
         </div>
       </div>
 
+      {/* Mobile: Vertical Grid */}
+      <div className="md:hidden flex-1 px-4 pb-8">
+        <div className="grid grid-cols-2 gap-3">
+          {galleryItems.map((item, index) => (
+            <motion.div
+              key={`mobile-${item.src}-${index}`}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              whileTap={{ scale: 0.98 }}
+              className="relative aspect-square rounded-lg overflow-hidden cursor-pointer"
+              onClick={() => setSelectedImage(index)}
+            >
+              <Image
+                src={item.src}
+                alt=""
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 50vw, 25vw"
+              />
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
       {/* Hint */}
-      <div className="pb-8 text-center">
+      <div className="hidden md:block pb-8 text-center">
         <p className="text-sm" style={{ color: 'var(--muted)', opacity: 0.5 }}>自动播放 · 点击放大</p>
+      </div>
+      <div className="md:hidden pb-4 text-center">
+        <p className="text-xs" style={{ color: 'var(--muted)', opacity: 0.5 }}>点击图片放大</p>
       </div>
 
       {/* Lightbox */}
@@ -961,6 +1003,7 @@ function ContactSection() {
 export default function Home() {
   const [currentSection, setCurrentSection] = useState(0);
   const [isDark, setIsDark] = useState(true);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -979,7 +1022,6 @@ export default function Home() {
       if (!containerRef.current) return;
       const scrollTop = containerRef.current.scrollTop;
 
-      // Find which section we're currently in
       let newSection = 0;
       for (let i = 0; i < sectionRefs.current.length; i++) {
         const section = sectionRefs.current[i];
@@ -1002,6 +1044,7 @@ export default function Home() {
 
   // Scroll to section
   const scrollToSection = (index: number) => {
+    setIsMobileMenuOpen(false);
     if (!containerRef.current) return;
     const section = sectionRefs.current[index];
     if (section) {
@@ -1016,11 +1059,13 @@ export default function Home() {
     <main className={`relative ${isDark ? "" : "light"}`}>
       {/* Top Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b" style={{ backgroundColor: 'var(--nav-bg)', borderColor: 'var(--card-border)' }}>
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="text-xl font-bold" style={{ color: 'var(--foreground)' }}>
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
+          <div className="text-lg md:text-xl font-bold" style={{ color: 'var(--foreground)' }}>
             <span style={{ color: 'var(--primary)' }}>R</span>ao Jiaxing
           </div>
-          <div className="flex items-center gap-8">
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-6 lg:gap-8">
             {sections.map((section, index) => (
               <button
                 key={section.id}
@@ -1036,7 +1081,7 @@ export default function Home() {
             {/* Theme Toggle */}
             <button
               onClick={() => setIsDark(!isDark)}
-              className="ml-4 w-10 h-10 rounded-full flex items-center justify-center transition-all border"
+              className="ml-2 w-9 h-9 rounded-full flex items-center justify-center transition-all border"
               style={{
                 borderColor: 'var(--card-border)',
                 backgroundColor: 'var(--card-bg)',
@@ -1044,17 +1089,70 @@ export default function Home() {
               }}
             >
               {isDark ? (
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               ) : (
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                 </svg>
               )}
             </button>
           </div>
+
+          {/* Mobile Menu Button */}
+          <div className="flex md:hidden items-center gap-3">
+            <button
+              onClick={() => setIsDark(!isDark)}
+              className="w-9 h-9 rounded-full flex items-center justify-center border"
+              style={{
+                borderColor: 'var(--card-border)',
+                backgroundColor: 'var(--card-bg)',
+                color: 'var(--foreground)'
+              }}
+            >
+              {isDark ? (
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              ) : (
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+              )}
+            </button>
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="w-9 h-9 flex flex-col items-center justify-center gap-1.5"
+              style={{ color: 'var(--foreground)' }}
+            >
+              <span className={`w-5 h-0.5 transition-all ${isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`} style={{ backgroundColor: 'currentColor' }} />
+              <span className={`w-5 h-0.5 transition-all ${isMobileMenuOpen ? 'opacity-0' : ''}`} style={{ backgroundColor: 'currentColor' }} />
+              <span className={`w-5 h-0.5 transition-all ${isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} style={{ backgroundColor: 'currentColor' }} />
+            </button>
+          </div>
         </div>
+
+        {/* Mobile Menu Dropdown */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden border-t" style={{ borderColor: 'var(--card-border)', backgroundColor: 'var(--nav-bg)' }}>
+            <div className="px-4 py-3 space-y-2">
+              {sections.map((section, index) => (
+                <button
+                  key={section.id}
+                  onClick={() => scrollToSection(index)}
+                  className="block w-full text-left py-2 text-base transition-colors"
+                  style={{
+                    color: currentSection === index ? 'var(--foreground)' : 'var(--muted)'
+                  }}
+                >
+                  <span className="mr-2 text-xs opacity-50">{section.num}</span>
+                  {section.name}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Scroll Container */}
@@ -1071,8 +1169,8 @@ export default function Home() {
         <div id="contact" ref={(el) => { sectionRefs.current[5] = el; }}><ContactSection /></div>
       </div>
 
-      {/* Side Progress Bar */}
-      <nav className="fixed right-8 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-4">
+      {/* Side Progress Bar - Hidden on mobile */}
+      <nav className="hidden md:flex fixed right-8 top-1/2 -translate-y-1/2 z-50 flex-col gap-4">
         {sections.map((section, index) => (
           <button
             key={section.id}
