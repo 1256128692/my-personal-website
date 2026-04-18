@@ -9,6 +9,7 @@
   --card-bg: rgba(255, 255, 255, 0.05);
   --card-border: rgba(255, 255, 255, 0.1);
   --nav-bg: rgba(10, 10, 10, 0.8);
+  --video-overlay: rgba(0, 0, 0, 0.35);
 }
 
 .light {
@@ -20,6 +21,7 @@
   --card-bg: rgba(255, 255, 255, 0.8);
   --card-border: rgba(0, 0, 0, 0.1);
   --nav-bg: rgba(245, 245, 245, 0.9);
+  --video-overlay: rgba(0, 0, 0, 0.55);
 }
 
 @theme inline {

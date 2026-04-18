@@ -5,7 +5,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import Image from "next/image";
 
 // Typewriter component - paired Chinese/English with reflection
-function TypewriterText({ lines }: { lines: string[] }) {
+function TypewriterText({ lines, isDark = true }: { lines: string[]; isDark?: boolean }) {
   // Group lines into pairs: [0,1], [2,3], [4,5], etc.
   const pairedLines: [string, string][] = [];
   for (let i = 0; i < lines.length; i += 2) {
@@ -84,7 +84,7 @@ function TypewriterText({ lines }: { lines: string[] }) {
         >
           <p
             className="text-lg md:text-xl leading-relaxed"
-            style={{ fontFamily: "'JetBrains Mono', monospace", color: 'var(--foreground)' }}
+            style={{ fontFamily: "'JetBrains Mono', monospace", color: isDark ? 'var(--foreground)' : '#ffffff', textShadow: isDark ? 'none' : '0 1px 10px rgba(0,0,0,0.2)' }}
           >
             {pair.zh}
             {i === currentPair && !showEnglish && (
@@ -96,7 +96,7 @@ function TypewriterText({ lines }: { lines: string[] }) {
           </p>
           <p
             className="text-base md:text-lg leading-relaxed"
-            style={{ fontFamily: "'JetBrains Mono', monospace", color: 'var(--muted)' }}
+            style={{ fontFamily: "'JetBrains Mono', monospace", color: isDark ? 'var(--muted)' : 'rgba(255,255,255,0.85)' }}
           >
             {pair.en}
             {i === currentPair && showEnglish && (
@@ -163,7 +163,7 @@ function ParticleBackground() {
 }
 
 // Hero Section
-function HeroSection() {
+function HeroSection({ isDark }: { isDark: boolean }) {
   const { scrollY } = useScroll();
   const opacity = useTransform(scrollY, [0, 400], [1, 0]);
   const scale = useTransform(scrollY, [0, 400], [1, 0.95]);
@@ -196,21 +196,21 @@ function HeroSection() {
     >
       {/* Video Background */}
       <video
+        key={isDark ? 'dark' : 'light'}
         autoPlay
         muted
         loop
         playsInline
         className="absolute inset-0 w-full h-full object-cover z-0"
-        style={{ filter: 'brightness(0.4) contrast(1.1)' }}
+        style={{ filter: isDark ? 'brightness(0.6) contrast(1.1)' : 'brightness(0.9) contrast(1.05)' }}
       >
-        <source src="/videos/dynamic.mp4" type="video/mp4" />
+        <source src={isDark ? "/videos/dynamic.mp4" : "/videos/sea.mp4"} type="video/mp4" />
       </video>
 
-      {/* Dark overlay for video - makes text readable */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[var(--background)]/90 via-[var(--background)]/70 to-[var(--background)]/90 z-[1]" />
+      {/* Light overlay - just enough to make text readable */}
+      <div className="absolute inset-0 z-[1]" style={{ background: 'var(--video-overlay)' }} />
 
       <ParticleBackground />
-      <div className="absolute inset-0 bg-gradient-to-r from-[var(--background)] via-[var(--background)] to-transparent z-[2]" />
 
       <div className="relative z-30 flex flex-col md:flex-row items-center gap-8 md:gap-16 max-w-7xl mx-auto w-full">
         {/* Left: Big Name */}
@@ -224,7 +224,7 @@ function HeroSection() {
             animate={{ scale: [1, 1.02, 1] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold whitespace-nowrap tracking-wider"
-            style={{ color: 'var(--foreground)' }}
+            style={{ color: isDark ? 'var(--foreground)' : '#ffffff', textShadow: isDark ? 'none' : '0 2px 20px rgba(0,0,0,0.3)' }}
           >
             饶家兴
           </motion.h1>
@@ -233,7 +233,7 @@ function HeroSection() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
             className="text-lg md:text-2xl mt-2"
-            style={{ color: 'var(--muted)' }}
+            style={{ color: isDark ? 'var(--muted)' : 'rgba(255,255,255,0.9)' }}
           >
             Rao Jiaxing
           </motion.p>
@@ -246,7 +246,7 @@ function HeroSection() {
           transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
           className="flex-1 max-w-2xl w-full"
         >
-          <TypewriterText lines={typewriterLines} />
+          <TypewriterText lines={typewriterLines} isDark={isDark} />
         </motion.div>
       </div>
 
@@ -1176,7 +1176,7 @@ export default function Home() {
         className="h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth"
         style={{ scrollbarWidth: "none", backgroundColor: 'var(--background)', color: 'var(--foreground)' } as React.CSSProperties}
       >
-        <div id="hero" ref={(el) => { sectionRefs.current[0] = el; }}><HeroSection /></div>
+        <div id="hero" ref={(el) => { sectionRefs.current[0] = el; }}><HeroSection isDark={isDark} /></div>
         <div id="about" ref={(el) => { sectionRefs.current[1] = el; }}><AboutSection /></div>
         <div id="timeline" ref={(el) => { sectionRefs.current[2] = el; }}><TimelineSection /></div>
         <div id="gallery" ref={(el) => { sectionRefs.current[3] = el; }}><GallerySection /></div>
