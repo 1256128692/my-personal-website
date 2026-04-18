@@ -194,10 +194,25 @@ function HeroSection() {
       style={{ opacity, scale }}
       className="relative min-h-screen flex items-center px-6 md:px-24 overflow-hidden"
     >
-      <ParticleBackground />
-      <div className="absolute inset-0 bg-gradient-to-r from-[var(--background)] via-[var(--background)] to-transparent" />
+      {/* Video Background */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover z-0"
+        style={{ filter: 'brightness(0.4) contrast(1.1)' }}
+      >
+        <source src="/videos/dynamic.mp4" type="video/mp4" />
+      </video>
 
-      <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-16 max-w-7xl mx-auto w-full">
+      {/* Dark overlay for video - makes text readable */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[var(--background)]/90 via-[var(--background)]/70 to-[var(--background)]/90 z-[1]" />
+
+      <ParticleBackground />
+      <div className="absolute inset-0 bg-gradient-to-r from-[var(--background)] via-[var(--background)] to-transparent z-[2]" />
+
+      <div className="relative z-30 flex flex-col md:flex-row items-center gap-8 md:gap-16 max-w-7xl mx-auto w-full">
         {/* Left: Big Name */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
@@ -239,7 +254,7 @@ function HeroSection() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 1 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30"
       >
         <motion.div
           animate={{ y: [0, 10, 0] }}
